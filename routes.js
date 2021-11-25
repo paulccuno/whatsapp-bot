@@ -4,6 +4,10 @@ const { withSession } = require("./whatsapp");
 
 const router = Router();
 
+router.get("/", (req, res) => {
+  res.json("Conexion exitosa");
+});
+
 router.post("/", (req, res) => {
   const { session, token } = req.body;
   console.log("body", session);
