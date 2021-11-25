@@ -1,4 +1,4 @@
-const { default: axios } = require("axios");
+const axios = require("axios");
 const { Client } = require("whatsapp-web.js");
 const { API_URL } = require("./env");
 
@@ -28,17 +28,15 @@ module.exports.withSession = (session, token) => {
 
   client.on("ready", () => {
     console.log("Estoy ready");
-    // socket.emit("ready", "escuchando mensajes");
 
     client.on("message", async (msg) => {
-      const { from, to, body } = msg;
+      const { from } = msg;
       const contact = await client.getContactById(from);
       const { pushname, number } = contact;
 
-      console.log(msg);
-
       const { data } = await axios({
-        url: `${API_URL}/LEADS/detailLEAD/${number}`,
+        method: "GET",
+        url: `${API_URL}/LEADS/ListLEADcell/${number}`,
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
@@ -47,35 +45,36 @@ module.exports.withSession = (session, token) => {
 
       if (data.success) return;
 
+      const newLead = {
+        Nombre: "",
+        Apellido: pushname,
+        Telefono: number,
+        Email: "",
+        Empresa: "",
+        Web: "",
+        Num_Emple: "",
+        Factur_Anu: "",
+        Sector_Empres: "",
+        Cargo_Empr: "",
+        Fuen_Pos: "",
+        Prod_Inte: "",
+        Experien: "No. ",
+        Comentario: "",
+        Assignedto: 1,
+        DateCreate: new Date(),
+        DateAssigned: new Date(),
+        CreatedBy: 1,
+      };
+
       await axios({
+        method: "POST",
         url: `${API_URL}/LEADS/createLEAD/`,
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        data: {
-          Nombre: null,
-          Apellido: pushname,
-          Telefono: number,
-          Email: null,
-          Empresa: null,
-          Web: null,
-          Num_Emple: null,
-          Factur_Anu: null,
-          Sector_Empres: null,
-          Cargo_Empr: null,
-          Fuen_Pos: null,
-          Prod_Inte: null,
-          Experien: null,
-          Comentario: null,
-          Assignedto: null,
-          DateCreate: new Date(),
-          DateAssigned: new Date(),
-          CreatedBy: 1,
-        },
+        data: newLead,
       });
-
-      // socket.emit("message", { contact, msg });
     });
   });
 

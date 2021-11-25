@@ -8,7 +8,7 @@ router.post("/", (req, res) => {
   const { session, token } = req.body;
   console.log("body", session);
   let client;
-  if (body) {
+  if (session && token) {
     client = withSession(session, token);
     return res.json({ success: true, data: client });
   }

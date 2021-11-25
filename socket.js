@@ -6,10 +6,10 @@ module.exports.onConnection = (socket) => {
   console.log("session", session);
   let client;
   console.log(`Nueva conexion ${user.username}`);
-  if (session) {
+  /*   if (session) {
     // client = withSession(socket, session);
   } else {
-  }
+  } */
   client = withOutSession(socket);
 
   socket.on("disconnect", () => {

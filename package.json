@@ -19,7 +19,7 @@
     "morgan": "^1.10.0",
     "qrcode": "^1.4.4",
     "socket.io": "^4.3.2",
-    "whatsapp-web.js": "^1.15.1"
+    "whatsapp-web.js": "latest"
   },
   "devDependencies": {
     "nodemon": "^2.0.15"
