@@ -43,7 +43,7 @@ module.exports.withSession = (session, token) => {
         },
       });
 
-      if (data.success) return;
+      if (data[0]?.id) return;
 
       const newLead = {
         Nombre: "",
